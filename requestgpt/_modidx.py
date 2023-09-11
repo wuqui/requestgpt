@@ -5,4 +5,4 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://wuqui.github.io',
                 'git_url': 'https://github.com/wuqui/requestgpt',
                 'lib_path': 'requestgpt'},
-  'syms': {'requestgpt.core': {'requestgpt.core.foo': ('core.html#foo', 'requestgpt/core.py')}}}
+  'syms': {'requestgpt.core': {'requestgpt.core.show_df': ('core.html#show_df', 'requestgpt/core.py')}}}
