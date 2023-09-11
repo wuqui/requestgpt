@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "requestgpt"
+  site-url: "https://wuqui.github.io/requestgpt"
+  description: "Analysing requests using GPT."
+  repo-branch: main
+  repo-url: "https://github.com/wuqui/requestgpt"
