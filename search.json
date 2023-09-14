@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "RequestGPT",
+    "section": "",
+    "text": "from requestgpt.src import *"
+  },
+  {
+    "objectID": "core.html#load-data",
+    "href": "core.html#load-data",
+    "title": "RequestGPT",
+    "section": "load data",
+    "text": "load data\n\ndf = load_data()"
+  },
+  {
+    "objectID": "core.html#set-up-gpt",
+    "href": "core.html#set-up-gpt",
+    "title": "RequestGPT",
+    "section": "set up GPT",
+    "text": "set up GPT\n\napi_key = get_api_key()\n\n\nprompt = \"\"\"\nYou work as a corpuslinguistic annotator for a research project in linguistics.\nYour task is to annotate data from the BNC 2014 spoken corpus, which contains written transcripts of spoken conversations of British English.\nYou are given an utterance and your job is to decide it is a request or not.\nIf they are requests, label them with the integer 1. If they are not requests, label them with the integer 0.\nYou should classify utterances as requests if they meet both of the following criteria:\n1. The speaker prompts the listener to a future action.\n2. The future action brings advantages for the speaker.\n\"\"\"\n\n\nfrom simpleaichat import AIChat\n\n\nmodel='gpt-3.5-turbo'\n# model='gpt-4'\n\nai = AIChat(model, system=prompt,\n    console=False, save_messages=False, params={\"temperature\": 0.0}\n)\n\n\ndf_dev = get_sample(df, 6)\n\n\ndf_out = run_model(ai, df_dev)\n\n100%|██████████| 6/6 [00:05&lt;00:00,  1.10it/s]\n/var/folders/gp/dw55jb3d3gl6jn22rscvxjm40000gn/T/ipykernel_50125/1062465001.py:8: FutureWarning: Returning a DataFrame from Series.apply when the supplied function returns a Series is deprecated and will be removed in a future version.\n  return pd.concat([df, ai_labels.apply(pd.Series).add_prefix('gpt_')], axis=1)\n\n\n\ndf_out\n\n\n\n\n\n\n\n\ntext_id\nu_n\nu_who\ntext\nlabel\ngpt_label\n\n\n\n\n28285\nS6BS\n2125\nS0594\nyeah\n0\n0\n\n\n8111\nSLSS\n186\nS0585\nI think it might be\n0\n0\n\n\n49888\nSNE5\n39\nS0391\nhave you looked at the twitter feed you get\n0\n0\n\n\n24170\nSDFL\n420\nS0154\ncan you not put it on the apple sauce though p...\n1\n0\n\n\n25323\nS632\n2321\nS0222\ncan you hold him still so I can touch him with...\n1\n0\n\n\n32199\nS985\n662\nS0336\nhi can I order erm a takeaway for collection p...\n1\n1\n\n\n\n\n\n\n\n\ndf_out.to_csv(f'../out/requests_gpt_{model}.csv', index=False)"
+  },
+  {
+    "objectID": "src.html",
+    "href": "src.html",
+    "title": "Core functions",
+    "section": "",
+    "text": "source\n\n\n\n load_data (fp='../in/utterances_requests_50k_labeled.csv')\n\n\n\n\n\nsource\n\n\n\n\n get_sample (df, n)"
+  },
+  {
+    "objectID": "src.html#load-data",
+    "href": "src.html#load-data",
+    "title": "Core functions",
+    "section": "",
+    "text": "source\n\n\n\n load_data (fp='../in/utterances_requests_50k_labeled.csv')\n\n\n\n\n\nsource\n\n\n\n\n get_sample (df, n)"
+  },
+  {
+    "objectID": "src.html#set-up-gpt",
+    "href": "src.html#set-up-gpt",
+    "title": "Core functions",
+    "section": "set up GPT",
+    "text": "set up GPT\n\nget API key\n\nsource\n\n\nget_api_key\n\n get_api_key ()\n\n\n\nspecify output format\n\nsource\n\n\noutput_request\n\n output_request (label:int)\n\noutput schema for request\n\n\nrun model\n\nsource\n\n\nrun_model\n\n run_model (ai, df)"
+  }
+]
