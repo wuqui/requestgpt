@@ -6,4 +6,8 @@ d = { 'settings': { 'branch': 'main',
                 'git_url': 'https://github.com/wuqui/requestgpt',
                 'lib_path': 'requestgpt'},
   'syms': { 'requestgpt.core': {'requestgpt.core.load_data': ('src.html#load_data', 'requestgpt/core.py')},
-            'requestgpt.src': {'requestgpt.src.load_data': ('src.html#load_data', 'requestgpt/src.py')}}}
+            'requestgpt.src': { 'requestgpt.src.get_api_key': ('src.html#get_api_key', 'requestgpt/src.py'),
+                                'requestgpt.src.get_sample': ('src.html#get_sample', 'requestgpt/src.py'),
+                                'requestgpt.src.load_data': ('src.html#load_data', 'requestgpt/src.py'),
+                                'requestgpt.src.output_request': ('src.html#output_request', 'requestgpt/src.py'),
+                                'requestgpt.src.run_model': ('src.html#run_model', 'requestgpt/src.py')}}}
