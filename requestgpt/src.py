@@ -3,50 +3,49 @@
 # %% auto 0
 __all__ = ['load_data', 'get_sample', 'get_api_key', 'output_request', 'run_model']
 
-# %% ../nbs/01_src.ipynb 4
+# %% ../nbs/01_src.ipynb 2
 import pandas as pd
 
-# %% ../nbs/01_src.ipynb 5
-def load_data(fp='../in/utterances_requests_50k_labeled.csv'):
-	df = pd.read_csv('../in/utterances_requests_50k_labeled.csv')
+# %% ../nbs/01_src.ipynb 4
+def load_data(fp: str='../in/utterances_requests_50k_labeled.csv'):
+	df = pd.read_csv(fp)
 	# in the `label` column, replace `1.0` with `1` and `NaN` with `0`
-	df["label"] = df["label"].fillna(0).astype(int)
+	df['label'] = df['label'].fillna(0).astype(int)
 	return df
 
-# %% ../nbs/01_src.ipynb 7
-def get_sample(df, n):
-	sample_dfs = []
-	for label in [0, 1]:
-		sample_df = (df
-		.query(f'label == {label}')
-		.sample(int(n / 3) + 1)
-		)
-		sample_dfs.append(sample_df)
-	return pd.concat(sample_dfs)
+# %% ../nbs/01_src.ipynb 8
+def get_sample(df, requests_n: int):
+	requests = df.query('label == 1').sample(requests_n, random_state=23) 
+	non_requests = df.query('label == 0').sample(requests_n, random_state=23)
+	return pd.concat([requests, non_requests])
 
-# %% ../nbs/01_src.ipynb 10
+# %% ../nbs/01_src.ipynb 11
 from dotenv import load_dotenv
 import os
 
-# %% ../nbs/01_src.ipynb 11
+# %% ../nbs/01_src.ipynb 12
 def get_api_key():
 	# Load the environment variables from the .env file
 	load_dotenv()
 	# Get the value of the OPENAI_API_KEY environment variable
 	return os.getenv("OPENAI_API_KEY")
 
-# %% ../nbs/01_src.ipynb 13
+# %% ../nbs/01_src.ipynb 14
 from pydantic import BaseModel, Field
 
 class output_request(BaseModel):
     """output schema for request"""
-    label: int = Field(description="`0` if not a request, `1` if a request")
+    label: int = Field(description='`0` if not a request, `1` if a request')
+    justification: str = Field(description='justification for why or why not the given utterance was classified as a request')
+    confidence: int = Field(description='''
+        give a score for how confident you are in your classification of this utterance as a request/non-request,
+        on a scale of 1 to 5, where 1 is not confident at all and 5 is very confident''')
 
-# %% ../nbs/01_src.ipynb 15
+# %% ../nbs/01_src.ipynb 16
 from tqdm import tqdm
 
 def run_model(ai, df):
 	tqdm.pandas()
-	ai_labels = df["text"].progress_apply(lambda x: ai(str(x), output_schema=output_request))
+	ai_labels = df['text'].progress_apply(lambda x: ai(str(x), output_schema=output_request))
 	# Unpack the dictionary in `gpt_dict` column into separate columns and prefix every column with `gpt_`
 	return pd.concat([df, ai_labels.apply(pd.Series).add_prefix('gpt_')], axis=1)
