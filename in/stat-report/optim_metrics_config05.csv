@@ -1,0 +1,2 @@
+"acc","prec","sens","spec","f","AUC","numClass1","numClass1_pred"
+0.9772,0.2095,0.4306,0.983,0.2818,0.9393,72,148

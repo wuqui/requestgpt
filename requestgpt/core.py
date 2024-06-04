@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['read_prompt', 'run_model']
 
-# %% ../nbs/00_core.ipynb 9
+# %% ../nbs/00_core.ipynb 11
 def read_prompt(fpath):
     with open(fpath, 'r') as f:
         prompt = f.read()
