@@ -1,0 +1,9 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_overview.ipynb
+      - 01_classify-utterances.ipynb
+      - 02_evaluate-models.ipynb
+      - 03_classification-errors.ipynb
+      - 04_social-variables.ipynb

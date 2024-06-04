@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['read_utterances']
 
-# %% ../nbs/01_classify-utterances.ipynb 2
+# %% ../nbs/01_classify-utterances.ipynb 4
 import pandas as pd
 
 from langchain.pydantic_v1 import BaseModel, Field
@@ -13,7 +13,7 @@ from langchain.chains.openai_functions import create_structured_output_runnable
 
 from tqdm.notebook import tqdm
 
-# %% ../nbs/01_classify-utterances.ipynb 4
+# %% ../nbs/01_classify-utterances.ipynb 6
 def read_utterances(fpath: str='../in/utterances_train.csv') -> pd.DataFrame:
 	utterances = pd.read_csv(fpath)
 	# set empty cells in the `label` column, which represent non-requests, to the value `0`
